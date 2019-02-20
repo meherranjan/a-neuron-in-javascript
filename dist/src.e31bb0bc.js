@@ -18494,11 +18494,49 @@ function (_Component) {
   }
 
   _createClass(App, [{
+    key: "getWeights",
+    value: function getWeights() {
+      return Array.from({
+        length: 10
+      }, function () {
+        return Math.random() * 2 - 1;
+      });
+    }
+  }, {
+    key: "getInputs",
+    value: function getInputs() {
+      return Array.from({
+        length: 10
+      }, function () {
+        return Math.random() * 9;
+      });
+    }
+  }, {
+    key: "feedForward",
+    value: function feedForward(inputs, weights) {
+      var sum = function sum(accumulator, currentValue, currentIndex) {
+        return accumulator + currentValue * weights[currentIndex];
+      };
+
+      return inputs.reduce(sum, 0);
+    }
+  }, {
+    key: "activationFunction",
+    value: function activationFunction(sum) {
+      console.log(sum);
+
+      if (sum >= 0) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        className: "App"
-      });
+        className: 'app'
+      }, this.activationFunction(this.feedForward(this.getInputs(), this.getWeights())));
     }
   }]);
 
@@ -18546,7 +18584,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50873" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56202" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
